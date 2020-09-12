@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" 
+  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" 
+  crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="main_container">
+    <div class="music_container">
+      <h2 id="title">Bekhayali</h2>
+      <h3 id="artist">Sachet Tandon</h3>
+      <div class="img_container">
+        <img src="images/bekhayali.jpg" alt="">
+      </div>
+      <audio src="music/Bekhayali.mp3"></audio>
+
+      <!-- progress bar -->
+      <!-- <div class="progressbar_container" id="progress_container">
+        <div class="progress_duration_meter">
+          <div id="current_time">0:00</div>
+          <div id="duration">2:45</div>
+        </div>
+        <div class="progress_div" id="progress_div">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div> -->
+
+      <!-- controls -->
+      <div class="music_controls">
+        <i class="fa fa-backward" aria-hidden="true" id="prev" title="Previous"></i>
+        <i class="fa fa-play main_button" aria-hidden="true" id="play" title="play"></i>
+        <i class="fa fa-forward" aria-hidden="true" id="next" title="next"></i>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const music = document.querySelector('audio');
+    const img = document.querySelector('img');
+    const play = document.getElementById('play');
+    const artist = document.getElementById('artist');
+    const title = document.getElementById('title');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    
+    let progress = document.getElementById('progress');
+    let total_duration = document.getElementById("duration");
+    let current_time = document.getElementById("current_time");
+
+    const songs = [
+      {
+      name: "Bekhayali",
+      title:"Bekhayali",
+      artist: "Sachet Tandon"
+    },
+    {
+      name: "Garmi",
+      title:"Garmi",
+      artist: "Varun D"
+    },
+    {
+      name: "coca-cola",
+      title:"Coca Cola Tu",
+      artist: "Tony Kakkar"
+    },
+    {
+      name: "Ik Vaari Aa",
+      title:"Ik Vaari Aa",
+      artist: "Sushant"
+    },
+    {
+      name: "atif-aslam",
+      title:"Atif Aslam Mashup",
+      artist: "Atif Aslam"
+    },
+    ]
+
+    let isPlaying = false;
+//for play function
+      const playMusic = () => {
+      isPlaying = true;
+      music.play();
+      play.classList.replace("fa-play", "fa-pause");
+      img.classList.add("anime");
+    };
+
+
+//for pause function
+      const pauseMusic = () => {
+      isPlaying = false;
+      music.pause();
+      play.classList.replace("fa-pause", "fa-play");
+      img.classList.remove("anime");
+    };
+ 
+    play.addEventListener("click", () => {
+      isPlaying ? pauseMusic() : playMusic();
+    });
+
+//changing music data
+const loadsongs = (songs) => {
+  title.textContent = songs.title;
+  artist.textContent = songs.artist;
+  music.src = "music/"+songs.name + ".mp3";
+  img.src = "images/"+songs.name+".jpg";
+};
+
+    songIndex = 0;
+
+    const nextSong = () => {
+        songIndex = (songIndex + 1) % songs.length;
+        loadsongs(songs[songIndex]);
+        playMusic();
+    };
+
+    const prevSong = () => {
+        songIndex = (songIndex - 1 + songs.length) % songs.length;
+        loadsongs(songs[songIndex]);
+        playMusic();
+    };
+    //  // progress js work
+    //   music.addEventListener("timeupdate", (event) => {
+    //     const { currentTime, duration } = event.srcElement;
+    //     let progress_time = (currentTime / duration) * 100;
+    //     progress.style.width = '${progress_time}%';
+
+    //     //music duration update
+    //     let min_duration = Math.floor(duration / 60);
+    //     let sec_duration =  Math.floor(duration % 60);
+
+    //     let tot_duration = '${min_duration}:${sec_duration}';
+    //     if(duration){
+    //        total_duration.textContent = '${tot_duration}';
+    //     }
+    //   });
+
+      next.addEventListener("click", nextSong);
+      prev.addEventListener("click", prevSong);
+</script>
+</body>
+</html>
